@@ -5,12 +5,9 @@ import com.ic.o2o.entity.Area;
 import com.ic.o2o.entity.PersonInfo;
 import com.ic.o2o.entity.Shop;
 import com.ic.o2o.entity.ShopCategory;
-import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.event.TransactionalEventListener;
 
 import java.util.Date;
 import java.util.List;

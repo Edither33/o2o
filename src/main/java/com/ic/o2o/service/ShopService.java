@@ -1,10 +1,10 @@
 package com.ic.o2o.service;
 
+import com.ic.o2o.dto.ImageHolder;
 import com.ic.o2o.dto.ShopExecution;
 import com.ic.o2o.entity.Shop;
 import com.ic.o2o.exceptions.ShopOperationException;
 
-import java.io.File;
 import java.io.InputStream;
 
 public interface ShopService {
@@ -20,23 +20,21 @@ public interface ShopService {
      * 修改店铺
      *
      * @param shop
-     * @param shopImgInputStream
-     * @param fileName
+     * @param imageHolder
      * @return
      * @throws ShopOperationException
      */
-    public ShopExecution modifyShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException;
+    public ShopExecution modifyShop(Shop shop, ImageHolder imageHolder) throws ShopOperationException;
 
     /**
      * 注册商铺
      *
      * @param shop
-     * @param shopImage
-     * @param fileName
+     * @param imageHolder
      * @return
      * @throws ShopOperationException
      */
-    public ShopExecution addShop(Shop shop, InputStream shopImage, String fileName) throws ShopOperationException;
+    public ShopExecution addShop(Shop shop, ImageHolder imageHolder) throws ShopOperationException;
 
     /**
      * 根据Shopcondition分页查询

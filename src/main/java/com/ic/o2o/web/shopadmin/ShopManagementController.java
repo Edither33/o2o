@@ -1,6 +1,7 @@
 package com.ic.o2o.web.shopadmin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ic.o2o.dto.ImageHolder;
 import com.ic.o2o.dto.ShopExecution;
 import com.ic.o2o.entity.Area;
 import com.ic.o2o.entity.PersonInfo;
@@ -12,9 +13,6 @@ import com.ic.o2o.service.ShopCategoryService;
 import com.ic.o2o.service.ShopService;
 import com.ic.o2o.util.CodeUtil;
 import com.ic.o2o.util.HttpServletRequestUtil;
-import com.ic.o2o.util.ImageUtil;
-import com.ic.o2o.util.PathUtil;
-import jdk.nashorn.internal.runtime.linker.LinkerCallSite;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -177,7 +175,8 @@ public class ShopManagementController {
 
             ShopExecution se = null;
             try {
-                se = shopService.addShop(shop, shopImg.getInputStream(), shopImg.getOriginalFilename());
+                ImageHolder imageHolder = new ImageHolder(shopImg.getOriginalFilename(), shopImg.getInputStream());
+                se = shopService.addShop(shop, imageHolder);
                 if (se.getState() == ShopStateEnum.CHECK.getState()) {
                     modelMap.put("success", true);
                     List<Shop> shopList = (List<Shop>) request.getSession().getAttribute("shopList");
@@ -237,9 +236,11 @@ public class ShopManagementController {
             ShopExecution se = null;
             try {
                 if (shopImg == null) {
-                    se = shopService.modifyShop(shop, null, null);
+                    se = shopService.modifyShop(shop, null);
                 } else {
-                    se = shopService.modifyShop(shop, shopImg.getInputStream(), shopImg.getOriginalFilename());
+                    ImageHolder imageHolder = new ImageHolder(shopImg.getOriginalFilename()
+                            , shopImg.getInputStream());
+                    se = shopService.modifyShop(shop, imageHolder);
                 }
                 if (se.getState() == ShopStateEnum.SUCCESS.getState()) {
                     modelMap.put("success", true);

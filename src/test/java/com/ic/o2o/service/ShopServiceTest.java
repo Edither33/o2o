@@ -1,6 +1,7 @@
 package com.ic.o2o.service;
 
 import com.ic.o2o.BaseTest;
+import com.ic.o2o.dto.ImageHolder;
 import com.ic.o2o.dto.ShopExecution;
 import com.ic.o2o.entity.Area;
 import com.ic.o2o.entity.PersonInfo;
@@ -16,7 +17,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Date;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -57,7 +57,8 @@ public class ShopServiceTest extends BaseTest {
         shop.setAdvice("审核中");
         File shopImg = new File("C:/Users/thinkpad/Desktop/nanliu.jpg");
         InputStream is = new FileInputStream(shopImg);
-        ShopExecution se = shopService.addShop(shop, is, shopImg.getName());
+        ImageHolder imageHolder = new ImageHolder(shopImg.getName(), is);
+        ShopExecution se = shopService.addShop(shop, imageHolder);
         assertEquals(ShopStateEnum.CHECK.getState(), se.getState());
 
     }

@@ -39,4 +39,11 @@ public class ProductImgDaoTest extends BaseTest {
         int effNum = productImgDao.batchInsertProductImg(productImgList);
         assertEquals(2, effNum);
     }
+
+    @Test
+    public void testBBatchDelete() {
+        long productId = 1;
+        int effNum = productImgDao.deleteProductImgByProductId(productId);
+        assertEquals(2, effNum);
+    }
 }

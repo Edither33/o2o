@@ -1,5 +1,6 @@
 package com.ic.o2o.util;
 
+import com.ic.o2o.dto.ImageHolder;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
 import org.slf4j.Logger;
@@ -44,16 +45,16 @@ public class ImageUtil {
         return newFile;
     }
 
-    public static String generateThumbnail(InputStream thumbnailInputStream, String fileName, String targetAddr) {
+    public static String generateThumbnail(ImageHolder imageHolder, String targetAddr) {
         String realFileName = getRandomFileName();
-        String extension = getFileExtension(fileName);
+        String extension = getFileExtension(imageHolder.getImageName());
         makeDirPath(targetAddr);
         String relative = targetAddr + realFileName + extension;
         logger.debug("current relativeAddr is:" + relative);
         File dest = new File(PathUtil.getImgBasePath() + relative);
         logger.debug("current completeAddr is:" + PathUtil.getImgBasePath() + relative);
         try {
-            Thumbnails.of(thumbnailInputStream).size(200, 200)
+            Thumbnails.of(imageHolder.getImage()).size(200, 200)
                     .watermark(Positions.BOTTOM_RIGHT,
                             ImageIO.read(new File(basePath + "watermark.jpg")), 0.25f)
                     .outputQuality(0.8f)
@@ -98,4 +99,24 @@ public class ImageUtil {
         return nowTimeStr + rannum;
     }
 
+    public static String generateNormalImg(ImageHolder imageHolder, String targetAddr) {
+        String realFileName = getRandomFileName();
+        String extension = getFileExtension(imageHolder.getImageName());
+        makeDirPath(targetAddr);
+        String relative = targetAddr + realFileName + extension;
+        logger.debug("current relativeAddr is:" + relative);
+        File dest = new File(PathUtil.getImgBasePath() + relative);
+        logger.debug("current completeAddr is:" + PathUtil.getImgBasePath() + relative);
+        try {
+            Thumbnails.of(imageHolder.getImage()).size(337, 640)
+                    .watermark(Positions.BOTTOM_RIGHT,
+                            ImageIO.read(new File(basePath + "watermark.jpg")), 0.25f)
+                    .outputQuality(0.9f)
+                    .toFile(dest);
+        } catch (IOException e) {
+            logger.error(e.toString());
+            throw new RuntimeException("创建缩图片失败" + e.toString());
+        }
+        return relative;
+    }
 }
